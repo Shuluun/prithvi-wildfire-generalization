@@ -1,0 +1,70 @@
+{
+  "updated": "2026-08-31 (M1.6 protocol correction)",
+  "seed": 42,
+  "k": 5,
+  "split_hierarchy": "EVENT -> CHIP -> PIXEL; event == chip in hls_burn_scars (1 chip per matched event)",
+  "primary_population": {
+    "definition": "matched events with MTBS Incid_Type == 'Wildfire'",
+    "n_events": 576,
+    "source": "data/metadata/event_attributes.csv",
+    "excluded_from_primary": "Prescribed Fire (177, kept for secondary/domain-shift), Unknown (3), ambiguous (24) + unmatched (24) chips"
+  },
+  "legacy_manifests": {
+    "split_within_seed42.csv": "chip-level reference over all 804 chips; NOT within-event (0 events in >1 role); NOT primary",
+    "split_loeo_seed42.csv": "756-fold LOEO artifact; superseded as primary protocol by the K5 manifests"
+  },
+  "k5_event": {
+    "file": "split_k5_event_seed42.csv",
+    "role": "PRIMARY",
+    "shared_by": [
+      "spectral RF",
+      "frozen Prithvi"
+    ],
+    "procedure": "strata = (fire_year, 4 quantile bins of burned_fraction); strata processed largest-first; within a stratum events are rng(42)-shuffled and assigned to the currently smallest fold (ties -> lowest index)",
+    "burned_fraction_bin_edges": [
+      0.008382,
+      0.027843,
+      0.05081,
+      0.145555,
+      0.962551
+    ],
+    "fold_sizes": [
+      116,
+      115,
+      115,
+      115,
+      115
+    ]
+  },
+  "k5_spatial": {
+    "file": "split_k5_spatial_seed42.csv",
+    "role": "spatial-generalization sensitivity",
+    "procedure": "connected components of the primary event-footprint overlap graph; components assigned largest-first to the currently smallest fold; overlapping events always share a fold",
+    "n_components": 480,
+    "n_singletons": 413,
+    "max_component_size": 5,
+    "n_overlap_pairs_checked": 109,
+    "zero_cross_fold_overlap": true,
+    "fold_sizes": [
+      116,
+      115,
+      115,
+      115,
+      115
+    ]
+  },
+  "k5_tiledisjoint": {
+    "file": "split_k5_tiledisjoint_seed42.csv",
+    "role": "stricter sensitivity (HLS-tile-disjoint); NOT primary",
+    "procedure": "events sharing an HLS tile form a group; groups assigned largest-first to the currently smallest fold",
+    "n_tiles": 281,
+    "max_tile_group_size": 9,
+    "fold_sizes": [
+      116,
+      115,
+      115,
+      115,
+      115
+    ]
+  }
+}

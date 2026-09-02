@@ -1,0 +1,60 @@
+# --- Large / regenerable data (never in git) ---
+# All raw data and caches live outside this repo (see src/data/paths.py).
+data/raw/
+data/processed/
+data/external/
+
+# Regenerable LOEO split manifest (~55 MB; rebuilt by scripts/m1_5_make_splits.py
+# from committed chip_inventory.csv + events.csv)
+data/metadata/splits/split_loeo_*.csv
+
+# Model weights & checkpoints
+/models/
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+
+# Caches & embeddings (regenerable)
+cache/
+*.npy
+*.npz
+*.h5
+*.zarr/
+
+# Geospatial rasters/vectors (large)
+*.tif
+*.tiff
+*.vrt
+*.img
+*.zip
+*.tar
+*.tar.gz
+*.7z
+
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Environments & secrets
+envs/
+.venv/
+.env
+.env.*
+!.env.example
+
+# Large generated results (keep metrics.csv, reports, figures)
+results/predictions/
+results/embeddings/
+results/tmp/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log
